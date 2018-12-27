@@ -23,6 +23,19 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 app.use(bodyParser());
+//设置跨域访问
+// Access-Control-Allow-Origin: http://mozilla.org
+app.all('*', function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+});
+const apiMid = require('./api');
+app.use('/api', function (req, res, next) {
+  apiMid(req, res, next);
+});
+
 app.get('/', function (req, res) {
   res.send('hello world');
 });
