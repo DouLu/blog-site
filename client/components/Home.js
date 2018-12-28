@@ -1,5 +1,4 @@
 import React from 'react';
-import HeaderCop from './header/header';
 import './style.css';
 import { Tabs } from 'antd';
 import ListCop from './list/list';
@@ -18,7 +17,6 @@ class Home extends React.Component {
   render() {
     return (
       <div className="container">
-        <HeaderCop />
         <div className="content border">
           <div className="left-con border">
             <Tabs defaultActiveKey="1" animated={false}>

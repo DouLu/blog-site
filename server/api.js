@@ -1,19 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const getList = require('./controllers/list');
-const Admin = require('./schema/admin');
+const User = require('./schema/user');
 
+const dbError = {
+  code: 500,
+  msg: '数据库报错',
+};
+const dbSuccess = {
+  code: 200,
+  msg: '成功',
+};
+const noData = {
+  code: 300,
+  msg: '没有数据',
+};
 router.post('/login', function (req, res) {
-  const { userName, password } = req.body;
-  Admin.findOne({ name: userName }).exec(function (err, user) {
-    if (err) {
-      const responseData = {
-        code: 500,
-        msg: '数据库报错',
-      };
-      res.json(responseData);
-    }
-    if (!user || user.pwd !== password) {
+  const { data: { nickname, password } } = req.body;
+  User.findOne({ nickname }).exec(function (err, user) {
+    if (err) res.json(dbError);
+    if (!user || user.password !== password) {
       const responseData = {
         code: 400,
         msg: '验证失败，用户名或者密码错误',
@@ -28,6 +34,28 @@ router.post('/login', function (req, res) {
     }
   });
 });
+
+router.post('/register', function (req, res) {
+  const { data } = req.body;
+  const { email } = data;
+  if (!data) res.json(noData);
+
+  User.findOne({ email: email }).exec(function (err, user) {
+    if (err) res.json(dbError);
+    if (user) {
+      res.json({
+        code: 400,
+        msg: '邮箱已注册',
+      });
+    } else {
+      User.create(data, function (err) {
+        if (err) res.json(dbError);
+        res.json(dbSuccess);
+      });
+    }
+  });
+});
+
 
 router.get('/list', function (req, res) {
   getList().then((data) => {
