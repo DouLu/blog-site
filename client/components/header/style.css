@@ -1,0 +1,8 @@
+.content-box{
+  width: 1032px;
+  margin: auto;
+}
+.header-box{
+  display: flex;
+  justify-content: space-between;
+}

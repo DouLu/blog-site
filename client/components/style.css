@@ -1,0 +1,12 @@
+.content{
+  width: 1032px;
+  margin: 10px auto;
+  display: flex;
+}
+.left-con{
+  flex: 1;
+}
+.right-con{
+  width: 296px;
+  margin-left: 10px;
+}

@@ -1,16 +1,53 @@
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var path = require('path');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 
-module.exports = merge(common, {
-  mode: 'production',
+var productionConfig = [{
+  entry: {
+    home: ['./client/home', hotMiddlewareScript],
+    login: ['./client/login', hotMiddlewareScript]
+  },
+  output: {
+    filename: './[name]/bundle.js',
+    path: path.resolve(__dirname, './public'),
+    publicPath: '/'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader'
+        }
+      },
+      {
+        test: /\.(png|jpg)$/,
+        use: 'url-loader?limit=8192&context=client&name=[path][name].[ext]'
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'resolve-url-loader', 'sass-loader?sourceMap']
+        })
+      }
+    ]
+  },
   plugins: [
-    new UglifyJSPlugin({
-      sourceMap: true
-    }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+    new CleanWebpackPlugin(['public']),
+    new ExtractTextPlugin({
+      filename: './[name]/index.css',
+      allChunks: true
     })
   ]
-});
+}];
+
+module.exports = productionConfig;

@@ -1,0 +1,16 @@
+.login-form-box{
+  width: 400px;
+  margin: auto;
+  padding: 40px 60px;
+}
+.login-form-button{
+  display: block;
+  width: 100%;
+}
+.flex-box{
+  display: flex;
+  justify-content: space-between;
+}
+.flex-box span{
+  cursor: pointer;
+}

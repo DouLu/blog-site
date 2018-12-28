@@ -1,36 +1,20 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const webpack = require('webpack');
+var webpack = require('webpack');
+var path = require('path');
 
-module.exports = {
-  // entry: './src/index.js',
+var publicPath = 'http://localhost:3000/';
+var hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
+
+var devConfig = {
   entry: {
-    app: './app/index.js',
+    home: ['./client/home', hotMiddlewareScript],
+    login: ['./client/login', hotMiddlewareScript]
   },
-  // 方便开发调试
-  devtool: 'inline-source-map',
-  // webpack-dev-server 为你提供了一个简单的 web 服务器，并且能够实时重新加载(live reloading)
-  devServer: {
-    contentBase: './public', // 告诉开发服务器(dev server)，在哪里查找文件
-    hot: true, // 热更新
-  },
-  plugins: [
-    new CleanWebpackPlugin(['public/dist']),
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-    }),
-    // 热更新
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('dev')
-    })
-  ],
   output: {
-    // filename: 'main.js',
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'public/dist')
+    filename: './[name]/bundle.js',
+    path: path.resolve(__dirname, './public'),
+    publicPath: publicPath
   },
+  devtool: 'eval-source-map',
   module: {
     rules: [
       {
@@ -39,7 +23,33 @@ module.exports = {
         use: {
           loader: 'babel-loader'
         }
+      },
+      {
+        test: /\.(png|jpg)$/,
+        use: 'url-loader?limit=8192&context=client&name=[path][name].[ext]'
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          'css-loader?sourceMap',
+          'resolve-url-loader',
+          'sass-loader?sourceMap'
+        ]
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  ]
 };
+
+module.exports = devConfig;

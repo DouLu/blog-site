@@ -8,6 +8,6 @@ module.exports = function getList() {
   return List.find({}).exec();
 }
 
-module.exports = function getItem() {
+/* module.exports = function getItem() {
   return List.find({ id: 'itemID0' }).exec();
-}
+} */

@@ -31,7 +31,7 @@ app.all('*', function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 });
-const apiMid = require('./api');
+const apiMid = require('./server/routes/api');
 app.use('/api', function (req, res, next) {
   apiMid(req, res, next);
 });
