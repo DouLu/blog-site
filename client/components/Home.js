@@ -2,6 +2,7 @@ import React from 'react';
 import './style.css';
 import { Tabs } from 'antd';
 import ListCop from './list/list';
+import UserInfo from './user/userInfo';
 
 const TabPane = Tabs.TabPane;
 
@@ -27,7 +28,9 @@ class Home extends React.Component {
               <TabPane tab="Tab 3" key="3">Content of Tab Pane 3</TabPane>
             </Tabs>
           </div>
-          <div className="right-con border"></div>
+          <div className="right-con border">
+            <UserInfo />
+          </div>
         </div>
       </div>
     );

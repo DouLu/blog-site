@@ -10,6 +10,9 @@
 </head>
 
 <body>
+  <% if(serverError == true){ %>
+  <div>服务不存在</div>
+  <% } %>
   <div id="root"></div>
   <script src="/home/bundle.js"></script>
   <% if (env !== "production" && reload === true) { %>

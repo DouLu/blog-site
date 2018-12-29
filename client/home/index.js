@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import { HashRouter as Router, Route } from 'react-router-dom'
-import WrappedNormalLoginForm from '../login/login';
 import Home from '../components/Home';
+import ArticleDetail from '../components/article/detail';
 
 if (process.env.NODE_ENV == 'production') {
   console.log('now mode is production');
@@ -18,7 +18,7 @@ class App extends React.Component {
         <div className="App">
           <div>
             <Route exact path="/" component={Home} />
-            <Route path="/test" component={WrappedNormalLoginForm} />
+            <Route path="/detail" component={ArticleDetail} />
           </div>
         </div>
       </Router>

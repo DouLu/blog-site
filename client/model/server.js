@@ -10,6 +10,5 @@ export async function getList() {
   });
   let response = await fetch(request);
   let res = await response.json();
-  console.log('_________res', res);
   return res.data;
 }

@@ -43,8 +43,8 @@ class ListCop extends React.Component {
             extra={<img width={272} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
           >
             <List.Item.Meta
-              avatar={<Avatar src={item.img} />}
-              title={<a href={item.href}>{item.title}</a>}
+              avatar={<Avatar src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
+              title={<a href={`#/detail?id=${item.id}`}>{item.title}</a>}
             />
             {item.profile}
           </List.Item>

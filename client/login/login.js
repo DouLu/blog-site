@@ -8,7 +8,6 @@ class NormalLoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        message.loading('login . . .');
         fetch('http://localhost:3000/api/login', {
           method: 'POST',
           body: JSON.stringify({ data: values }),
@@ -21,6 +20,7 @@ class NormalLoginForm extends React.Component {
             message.error('请求出错');
           }).then(res => {
             if (res.code == 200) {
+              window.localStorage.nickname = values.nickname;
               window.location.href = 'http://localhost:3000/home/';
             } else {
               message.warning(res.msg);
